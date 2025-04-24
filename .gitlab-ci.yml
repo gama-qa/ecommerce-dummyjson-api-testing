@@ -1,0 +1,16 @@
+image: postman/newman:alpine
+
+stages:
+  - test
+
+postman_api_test:
+  stage: test
+  script:
+    - echo "Running Postman Collection..."
+    - newman run collection/ecommerce-dummyjson.postman_collection.json \
+        --environment env/qa-staging.postman_environment.json \
+        --reporters cli,json,html \
+        --reporter-html-export result/report.html
+  artifacts:
+    paths:
+      - result/report.html
